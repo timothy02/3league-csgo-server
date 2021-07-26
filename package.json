@@ -1,0 +1,38 @@
+{
+  "name": "3league-csgo-server",
+  "version": "0.0.1",
+  "description": "A simple executable wrapper that downloads CS:GO server along with Get5 required mods.",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "lint": "eslint -c .eslintrc --ext .ts ./src",
+    "start": "npm run build && electron ./dist/main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/timothy02/3league-csgo-server.git"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.28.4",
+    "@typescript-eslint/parser": "^4.28.4",
+    "electron": "^13.1.7",
+    "electron-reload": "^2.0.0-alpha.1",
+    "eslint": "^7.31.0",
+    "typescript": "^4.3.5"
+  },
+  "dependencies": {},
+  "keywords": [
+    "CS:GO",
+    "Counter-Strike",
+    "Get5",
+    "Server",
+    "SteamCMD"
+  ],
+  "author": "Tymoteusz Cierzan",
+  "license": "SEE LICENSE IN LICENSE.MD",
+  "bugs": {
+    "url": "https://github.com/timothy02/3league-csgo-server/issues"
+  },
+  "homepage": "https://github.com/timothy02/3league-csgo-server#readme"
+}

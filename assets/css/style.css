@@ -1,0 +1,107 @@
+body {
+  font-family: "Poppins";
+  color: white;
+  background-color: #0c0f16;
+  padding: 0;
+  margin: 0;
+}
+
+.btn {
+  border: none;
+  font-family: "Poppins";
+  text-transform: uppercase;
+  cursor: pointer;
+  background-color: transparent;
+  font-weight: 500;
+  font-size: 1.1rem;
+  padding: .2rem .8rem;
+}
+
+.btn.disabled {
+  opacity: .6;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+.btn.accent {
+  background-color: #9F3783;
+}
+
+.btn.red {
+  background-color: #ff4d4f;
+}
+
+.btn.green {
+  background-color: #20c997;
+}
+
+.btn.blue {
+  background-color: #2196F3;
+}
+
+.btn.orange {
+  background-color: #fa8b0c;
+}
+
+.btn.white {
+  background-color: white;
+}
+
+header {
+  padding: 20px 50px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  column-gap: 2rem;
+}
+
+header img {
+  width: 4rem;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+header h1 {
+  font-family: "Barlowcondensed";
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+.step {
+  padding: 1rem 1.5rem;
+}
+
+.step:nth-of-type(even) {
+  background-color: #252a36;
+}
+
+.step h2 {
+  font-size: 2rem;
+  text-transform: uppercase;
+  font-family: "Barlowcondensed";
+  letter-spacing: 0.01em;
+  font-weight: bold;
+  margin: 0;
+  margin-bottom: 1rem;
+}
+
+.step h3 {
+  font-weight: 600;
+  margin-top: 0;
+  font-size: 1.2rem;
+  margin-bottom: .3rem;
+}
+
+.controls {
+  border-bottom: 3px solid #9F3783;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+form button {
+  margin-top: .5rem;
+}
