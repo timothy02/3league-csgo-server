@@ -7,21 +7,30 @@
     "build": "tsc",
     "watch": "tsc -w",
     "lint": "eslint -c .eslintrc --ext .ts ./src",
-    "start": "npm run build && electron ./dist/main.js"
+    "start": "npm run build && electron ./dist/main.js",
+    "test": "mocha -r ts-node/register 'tests/**/*.ts'"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/timothy02/3league-csgo-server.git"
   },
   "devDependencies": {
+    "@types/chai": "^4.2.21",
+    "@types/mocha": "^9.0.0",
     "@typescript-eslint/eslint-plugin": "^4.28.4",
     "@typescript-eslint/parser": "^4.28.4",
+    "chai": "^4.3.4",
     "electron": "^13.1.7",
     "electron-reload": "^2.0.0-alpha.1",
     "eslint": "^7.31.0",
+    "mocha": "^9.0.3",
+    "ts-node": "^10.1.0",
     "typescript": "^4.3.5"
   },
-  "dependencies": {},
+  "dependencies": {
+    "anzip": "^0.2.0",
+    "mv": "^2.1.1"
+  },
   "keywords": [
     "CS:GO",
     "Counter-Strike",

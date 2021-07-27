@@ -7,9 +7,16 @@
     "baseUrl": ".",
     "paths": {
       "*": ["node_modules/*"]
-    }
+    },
+    "typeRoots": [ "./types", "./node_modules/@types"],
+    "downlevelIteration": true
   },
   "include": [
     "src/**/*"
+  ],
+  "exclude": [
+    "./tests/",
+    "./node_modules/",
+    "./dist/"
   ]
 }
