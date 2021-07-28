@@ -1,9 +1,9 @@
-import * as http from 'http';
-import * as fs from 'fs';
-import * as path from 'path';
-import * as anzip from 'anzip';
+import http from 'http';
+import fs from 'fs';
+import path from 'path';
+import anzip from 'anzip';
 import { spawn } from 'child_process';
-import * as EventEmmiter from 'events';
+import EventEmmiter from 'events';
 
 enum SteamCMDStatus {
     INITIALIZE = "INITIALIZE",

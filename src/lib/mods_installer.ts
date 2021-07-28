@@ -1,8 +1,7 @@
-import * as fs from 'fs';
-import * as path from 'path';
-import * as anzip from 'anzip';
-import * as EventEmmiter from 'events';
-import * as mv from 'mv';
+import path from 'path';
+import anzip from 'anzip';
+import EventEmmiter from 'events';
+import mv from 'mv';
 
 enum ModInstallerStatus {
     MODSINSTALLING = "MODS INSTALALLING",
