@@ -1,6 +1,18 @@
-// This file is required by the index.html file and will
-// be executed in the renderer process for that window.
-// No Node.js APIs are available in this process unless
-// nodeIntegration is set to true in webPreferences.
-// Use preload.js to selectively enable features
-// needed in the renderer process.
+import StepManager from "./renderer/steps";
+import { ipcRenderer } from 'electron';
+import { IPCCommunicationCommands } from './ipc/protocol';
+
+ipcRenderer.on("STEAMCMD_STATUS_UPDATE", (event, status: string) => {
+  console.log(status);
+});
+
+ipcRenderer.on("STEAMCMD_MESSAGE_UPDATE", (event, message: string) => {
+  console.log(message);
+});
+
+
+window.addEventListener("DOMContentLoaded", () => {
+  StepManager.run();
+
+  ipcRenderer.send(IPCCommunicationCommands.REQUEST_SERVER_STATUSES);
+});

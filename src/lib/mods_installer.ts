@@ -2,13 +2,7 @@ import path from 'path';
 import anzip from 'anzip';
 import EventEmmiter from 'events';
 import mv from 'mv';
-
-enum ModInstallerStatus {
-    MODSINSTALLING = "MODS INSTALALLING",
-    MODSENABLING = "MODS ENABLING",
-    FINISHED = "FINISHED",
-    ERROR = "ERROR"
-}
+import { ModInstallerStatus } from '../ipc/protocol';
 
 interface ModInstallerConfig {
     csgoPath: string;

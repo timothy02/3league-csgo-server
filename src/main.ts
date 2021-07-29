@@ -1,27 +1,22 @@
 import { app, BrowserWindow } from "electron";
 import path from "path";
 import db from "./db/index";
-
-interface CustomNodeJsGlobal extends NodeJS.Global {
-  db: object;
-}
-
-declare const global: CustomNodeJsGlobal;
-
-global.db = db;
-
-require('electron-reload')(__dirname);
+import "./ipc/index";
 
 function createWindow() {
   const mainWindow = new BrowserWindow({
     height: 800,
     webPreferences: {
+      nodeIntegration: true, 
+      contextIsolation: false,
+      devTools: true,
       preload: path.join(__dirname, "preload.js"),
     },
     width: 500,
   });
 
   mainWindow.loadFile(path.join(__dirname, "../index.html"));
+  mainWindow.webContents.openDevTools()
 }
 
 app.on("ready", () => {

@@ -4,24 +4,14 @@ import path from 'path';
 import anzip from 'anzip';
 import { spawn } from 'child_process';
 import EventEmmiter from 'events';
+import { SteamCMDStatus } from '../ipc/protocol';
 
-enum SteamCMDStatus {
-    INITIALIZE = "INITIALIZE",
-    STEAMCMDSETUP = "STEAMCMD SETUP",
-    CSGODOWNLOAD = "CSGO DOWNLOAD",
-    FINISHED = "FINISHED",
-    CANCELLED = "CANCELED",
-    ERROR = "ERROR"
-}
 
 interface SteamCMDConfig {
     baseDir: string;
     downloadDir: string;
     installDir: string;
     scriptsDir: string;
-    modsDir: string;
-    modInstallList: Array<string>;
-    modEnableList: Array<string>;
 }
 
 async function createIfDoesntExist(dirname: string) : Promise<string> {
@@ -56,7 +46,7 @@ export default class SteamCMD extends EventEmmiter{
         this.scriptsDir = path.resolve(__dirname, "../../", config.scriptsDir);
     }
 
-    async installCsgo(){
+    async steamCmdSetup(){
         try{
             this.emitStatus(SteamCMDStatus.INITIALIZE);
             await this.prepareDirectories();
@@ -64,9 +54,19 @@ export default class SteamCMD extends EventEmmiter{
             await this.downloadSteamCmd();
             await this.unpackSteamCmd(); 
             await this.loadSteamCmdScripts(); 
+            this.emitStatus(SteamCMDStatus.STEAMCMD_FINISHED);
+            this.logMessage("SteamCMD downloaded successfully.");
+        }catch(e){
+            this.emitStatus(SteamCMDStatus.ERROR);
+            this.logError(e);
+        }
+    }
+
+    async csgoSetup(){
+        try{
             this.emitStatus(SteamCMDStatus.CSGODOWNLOAD);
             await this.runSteamCmd();
-            this.emitStatus(SteamCMDStatus.FINISHED);
+            this.emitStatus(SteamCMDStatus.CSGO_FINISHED);
         }catch(e){
             this.emitStatus(SteamCMDStatus.ERROR);
             this.logError(e);
@@ -162,26 +162,42 @@ export default class SteamCMD extends EventEmmiter{
         });
     }
 
-    runSteamCmd(){
-        this.steamCmdProcess = spawn(path.join(this.installDir, "steamcmd.exe"), ["+runscript", "csgo_script.txt"],{
-            stdio: 'pipe',
-            shell: true
-        });
+    async runSteamCmd(): Promise<void>{
+        return new Promise((resolve, reject) => { 
+            this.logMessage("CS:GO download started. Please wait it might take up to 15 minutes.");
 
-        this.steamCmdProcess.stdout.on("data", (data: any) => {
-            this.logMessage(data.toString());
-        })
-        
-        this.steamCmdProcess.stdout.on("error", (error: any) => {
-            this.logError("err" + error.toString());
-        });
+            this.steamCmdProcess = spawn(path.join(this.installDir, "steamcmd.exe"), ["+runscript", "csgo_script.txt"],{
+                stdio: 'pipe',
+                shell: true
+            });
+    
+            this.steamCmdProcess.stdout.on("data", (data: any) => {
+                const message = data.toString();
+                const progressRegex = /[0-9][0-9]\.[0-9][0-9]/gm;
 
-        this.steamCmdProcess.stdout.on("end", () => {
-            this.logMessage("STEAMCMD DOWNLOAD END");
-        });
-
-        this.steamCmdProcess.stdout.on("close", () => {
-            this.logMessage("STEAMCMD CLOSE");
+                if(message.includes("OK")){
+                    this.logMessage("CS:GO download started. Please wait it might take up to 15 minutes.");
+                } else if(message.includes("downloading")){
+                    let matches = message.match(progressRegex);
+                    this.logMessage(`Download progress: ${matches[matches.length-1]}% Please note it's uptaded once in a while.`);
+                } else {
+                    this.logMessage(data.toString());
+                }
+            })
+            
+            this.steamCmdProcess.stdout.on("error", (error: any) => {
+                reject();
+                this.logError("err" + error.toString());
+            });
+    
+            this.steamCmdProcess.stdout.on("end", () => {
+                resolve();
+                this.logMessage("CS:GO downloaded successfully.");
+            });
+    
+            this.steamCmdProcess.stdout.on("close", () => {
+                this.logMessage("STEAMCMD CLOSE");
+            });
         });
     }
 

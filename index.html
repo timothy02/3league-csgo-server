@@ -3,16 +3,6 @@
   <head>
     <meta charset="UTF-8" />
     <title>Hello World!</title>
-    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
-    <meta
-      http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self'"
-    />
-    <meta
-      http-equiv="X-Content-Security-Policy"
-      content="default-src 'self'; script-src 'self'"
-    />
-
     <link href="assets/css/fonts.css" rel="stylesheet">
     <link href="assets/css/style.css" rel="stylesheet">
   </head>
@@ -37,42 +27,59 @@
      <h2>Instalation</h2>
 
       <h3>1. Download the SteamCMD and CS:GO server.</h3>
-      <form>
-        <button class="btn white">Download</button>
+      <form class="step-form">
+        <span class="message" id="steamcmd-message"></span>
+        <span class="error" id="steamcmd-error"></span>
+        <button id="steamcmd-button" class="main-action btn white">Download</button>
       </form>
     </section>
 
     <section class="step">
-      <h3>2. Install mods and addons - <i>optional</i>.</h3>
-      <form>
+     <h2>Instalation</h2>
+
+      <h3>2. Download the CS:GO server.</h3>
+      <form class="step-form">
+        <span class="message" id="csgo-message"></span>
+        <span class="error" id="csgo-error"></span>
+        <button class="main-action btn white disabled" id="csgo-button">Download</button>
+      </form>
+    </section>
+
+    <section class="step">
+      <h3>3. Install mods and addons - <i>optional</i>.</h3>
+      <form class="step-form">
+        <span class="message"></span>
+        <span class="error"></span>
         <label><input type="checkbox"> Sourcemod</label>
         <label><input type="checkbox"> Metamod</label>
         <label><input type="checkbox"> Get5</label>
         <label><input type="checkbox"> Get5 Apistats (+steamworks)</label>
-        <button class="btn white disabled">Install</button>
+        <button class="main-action btn white disabled">Install</button>
       </form>
     </section>
 
     <section class="step">
-      <h3>3. Upload config.</h3>
-      <form>
+      <h3>4. Upload config.</h3>
+      <form class="step-form">
+        <span class="message"></span>
+        <span class="error"></span>
         <label><input type="checkbox"> Esl5on5</label>
         <label><input type="checkbox"> 3League</label>
         <label>Custom config: <input type="file"></label>
-        <form>
-          <button class="btn white disabled">Upload</button>
-        </form>
+        <button class="main-action btn white disabled">Upload</button>
       </form>
     </section>
 
     <section class="step">
-      <h3>4. Management panel url  - <i>optional</i>.</h3>
-      <form>
+      <h3>5. Management panel url  - <i>optional</i>.</h3>
+      <form class="step-form">
+        <span class="message"></span>
+        <span class="error"></span>
         <label>Url <input type="text" placeholder="127.0.0.1:3000"></label>
       </form>
     </section>
 
     <!-- You can also require other files to run in this process -->
-    <script src="./dist/renderer.js"></script>
+    <script>require("./dist/renderer.js");</script>
   </body>
 </html>

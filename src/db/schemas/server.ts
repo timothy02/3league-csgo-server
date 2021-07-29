@@ -1,20 +1,13 @@
-export enum ServerInstallStatus{
-    NOT_INSTALLED = "NOT_INSTALLED",
-    STEAMCMD_INSTALLED = "STEAMCMD_INSTALLED",
-    CSGO_INSTALLED = "CSGO_INSTALLED",
-    MODS_INSTALLED = "MODS_INSTALLED",
-}
+import { SteamCMDStatus, ServerStatus, IPCSteamCMDCommands } from "../../ipc/protocol";
 
-export enum ServerStatus{
-    NOT_READY = "NOT_READY",
-    READY = "READY",
-    RUNNING = "RUNNING",
-    CONNECTED = "CONNECTED"
+export interface ServerStatusInfo {
+    status: SteamCMDStatus;
+    protocol: IPCSteamCMDCommands;
 }
 
 export interface Server{
     name: string;
-    installStatus: ServerInstallStatus;
+    installStatuses: Array<ServerStatusInfo>;
     status: ServerStatus;
     installDir: string;
 }
@@ -25,14 +18,18 @@ export const serverSchema = {
         name: {
             type: 'string',
         },
-        installStatus: {
-            type: "string",
-            default: ServerInstallStatus.NOT_INSTALLED,
+        installStatuses: {
+            type: "array",
+            default: [] as ServerStatusInfo[],
         },
         status: {
             type: "string",
             default: ServerStatus.NOT_READY,
+        },
+        installDir: {
+            type: "string",
+            default: ""
         }
     },
-    required: ["name", "installStatus", "status", "installDir"]
+    required: ["name", "installStatuses", "status", "installDir"]
 }
